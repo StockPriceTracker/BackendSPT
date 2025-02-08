@@ -1,11 +1,13 @@
 // server.js - Point d'entrée du backend
 const express = require('express');
-const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const morgan = require('morgan');
 const userRoutes = require('./routes/userRoute');
-
+const stockRoutes = require('./routes/stockRoute');
+const historicalStockRoutes = require('./routes/historicalStockRoute');
+const watchlistRoutes = require('./routes/watchlistRoute');
+const dbconnect =require('./config/db');
 
 // Configurations
 dotenv.config();
@@ -19,14 +21,15 @@ app.use(express.json());
 
 // Routes
 app.use('/api/users', userRoutes);
+app.use('/api/stock', stockRoutes);
+app.use('/api/historicalStock', historicalStockRoutes);
+app.use('/api/watchlist', watchlistRoutes);
 
 
 // Connexion à MongoDB
-mongoose.connect(process.env.MONGO_URI, {
-  
-}).then(() => {
-  console.log('MongoDB connecté');
-  app.listen(PORT, () => console.log(`Serveur démarré sur le port ${PORT}`));
-}).catch(err => console.error('Erreur de connexion MongoDB:', err));
+
+dbconnect();
+app.listen(PORT, () => console.log(`Serveur démarré sur le port ${PORT}`));
+
 
 module.exports = app;
