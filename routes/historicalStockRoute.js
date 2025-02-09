@@ -2,10 +2,10 @@ var express = require('express');
 const router = express.Router();
 
 // src/routes/authRoutes.js
-const { getHistoricalStocks } = require('../controllers/historicalStockController');
+const { getHistoricalStocks,getHistoricalStockBySymbol } = require('../controllers/historicalStockController');
 
-router.post('/getHistoricalStocks', getHistoricalStocks);
-
+router.get('/getHistoricalStocks', getHistoricalStocks);
+router.get('/getHistoricalStockBySymbol/:symbol', getHistoricalStockBySymbol);
 router.post("/save", async (req, res) => {
     try {
         const stockData = req.body;
