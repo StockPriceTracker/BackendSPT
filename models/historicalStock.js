@@ -10,7 +10,15 @@ const historicalStockSchema = new Schema(
       {
         price: { type: Number, required: true },
         percentageChange: { type: Number, required: true },
-        date: { type: Date, default: Date.now }
+        date: {
+          type: String,
+          default: function() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0'); // Ensure two digits
+            const minutes = now.getMinutes().toString().padStart(2, '0'); // Ensure two digits
+            return `${hours}:${minutes}`; 
+          }
+        }
       }
     ],
     
